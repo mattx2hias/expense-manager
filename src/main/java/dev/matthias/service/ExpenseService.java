@@ -4,11 +4,11 @@ import dev.matthias.entities.Expense;
 
 public interface ExpenseService {
 
-    byte createExpense();
+    Expense createExpense(Expense expense);
 
     Expense readExpense(int id);
 
-    byte updateExpense(int id);
+    Expense updateExpense(int id);
 
-    byte deleteExpense(int id);
+    Expense deleteExpense(int id);
 }

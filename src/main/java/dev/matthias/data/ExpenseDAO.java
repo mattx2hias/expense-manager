@@ -2,15 +2,17 @@ package dev.matthias.data;
 
 import dev.matthias.entities.Expense;
 
+import java.util.List;
+
 public interface ExpenseDAO {
 
-    boolean createExpense();
+    Expense createExpense(Expense expense);
 
     Expense readExpense();
 
-    boolean updateExpense(int id);
+    Expense updateExpense(int id);
 
-    boolean deleteExpense(int id);
+    Expense deleteExpense(int id);
 
-    int[] readAllExpenseIds();
+    List<Expense> readAllExpenses();
 }

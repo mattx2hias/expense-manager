@@ -2,15 +2,17 @@ package dev.matthias.data;
 
 import dev.matthias.entities.Employee;
 
+import java.util.List;
+
 public interface EmployeeDAO {
 
-    boolean createEmployee();
+    Employee createEmployee(Employee employee);
 
     Employee readEmployee(int id);
 
-    boolean updateEmployee(int id);
+    Employee updateEmployee(int id);
 
-    boolean deleteEmployee(int id);
+    Employee deleteEmployee(int id);
 
-    int[] readAllEmployeeIds();
+    List<Employee> readAllEmployees();
 }

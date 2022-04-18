@@ -4,11 +4,11 @@ import dev.matthias.entities.Employee;
 
 public interface EmployeeService {
 
-    byte createEmployee();
+    Employee createEmployee(Employee employee);
 
     Employee readEmployee(int id);
 
-    byte updateEmployee(int id);
+    Employee updateEmployee(int id);
 
-    byte deleteEmployee(int id);
+    Employee deleteEmployee(int id);
 }
