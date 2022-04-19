@@ -1,12 +1,5 @@
 package dev.matthias.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Random;
-
-
 public class Employee {
 
     private int id;
@@ -14,13 +7,11 @@ public class Employee {
     private String lastName;
 
     public Employee() {
-        setId();
     }
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        setId();
     }
 
     public Employee(int id, String firstName, String lastName) {
@@ -33,10 +24,10 @@ public class Employee {
         return id;
     }
 
-    public void setId() {
-        Random rand = new Random();
-        this.id = rand.nextInt(9999-1000) + 1000;
+    public void setId(int id) {
+        this.id = id;
     }
+
 
     public String getFirstName() {
         return firstName;
@@ -52,5 +43,14 @@ public class Employee {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

@@ -1,14 +1,20 @@
 package dev.matthias.api;
 
 import com.google.gson.Gson;
+import dev.matthias.data.EmployeeDAO;
+import dev.matthias.data.EmployeeDAOPostgres;
 import dev.matthias.entities.Employee;
 import dev.matthias.service.EmployeeService;
 import dev.matthias.service.EmployeeServiceImpl;
 import io.javalin.Javalin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
 
+        EmployeeDAO employeeDAO = new EmployeeDAOPostgres();
         EmployeeService employeeService = new EmployeeServiceImpl();
         Gson gson = new Gson();
         Javalin app = Javalin.create().start(3000);
@@ -20,6 +26,57 @@ public class App {
                 context.status(201);
             } else {
                 context.status(424);
+            }
+        });
+
+        app.get("/employees", context -> {
+            String display = "";
+            List<Employee> employees = employeeDAO.readAllEmployees();
+            if(employees.isEmpty()) {
+                context.status(404);
+                context.result("No employees found.");
+            } else {
+                for(Employee e : employees) display += e.toString() + "\n";
+                context.status(200);
+                context.result(display);
+            }
+
+        });
+
+        app.get("/employees/{id}", context -> {
+            int id = Integer.parseInt(context.pathParam("id"));
+            Employee employee = employeeService.readEmployee(id);
+            if(employee == null) {
+                context.status(404);
+                context.result("Employee: " + id + " not found.");
+            } else {
+                context.result(employee.toString());
+                context.status(200);
+            }
+        });
+
+        app.put("/employees/{id}", context -> {
+            int id = Integer.parseInt(context.pathParam("id"));
+            Employee employee = employeeService.readEmployee(id);
+            if(null == employee) {
+                context.status(404);
+            } else {
+                employee = employeeService.updateEmployee(employee);
+                context.status(200);
+                context.result("Updated: " + employee.getId());
+            }
+        });
+
+        app.delete("employees/{id}", context -> {
+            int id = Integer.parseInt(context.pathParam("id"));
+            if(employeeService.deleteEmployee(id)) {
+                context.status(200);
+                context.result("Deleted: " + id);
+            } else if(null == employeeService.readEmployee(id)) {
+                context.status(404);
+                context.result("Employee: " + id + "not found.");
+            } else {
+                context.status(400);
             }
         });
 

@@ -12,22 +12,30 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee createEmployee(Employee employee) {
+        employee.setId(this.generateId());
         return employeeDAO.createEmployee(employee);
     }
 
     @Override
     public Employee readEmployee(int id) {
-        return null;
+        return employeeDAO.readEmployee(id);
     }
 
     @Override
-    public Employee updateEmployee(int id) {
-        return null;
+    public Employee updateEmployee(Employee employee) {
+        return employeeDAO.updateEmployee(employee);
     }
 
     @Override
-    public Employee deleteEmployee(int id) {
-        return null;
+    public boolean deleteEmployee(int id) {
+        return employeeDAO.deleteEmployee(id);
+    }
+
+    public int generateId() {
+        int id = 0;
+        Random rand = new Random();
+        id = rand.nextInt(9999-1000) + 1000;
+        return id;
     }
 
 }

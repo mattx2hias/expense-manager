@@ -8,7 +8,7 @@ public interface ExpenseService {
 
     Expense readExpense(int id);
 
-    Expense updateExpense(int id);
+    Expense updateExpense(Expense expense);
 
     Expense deleteExpense(int id);
 }

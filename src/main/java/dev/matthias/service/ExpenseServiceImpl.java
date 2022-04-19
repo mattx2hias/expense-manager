@@ -1,11 +1,8 @@
-package dev.matthias.data;
+package dev.matthias.service;
 
 import dev.matthias.entities.Expense;
 
-import java.util.List;
-
-public class ExpenseDAOPostgres implements ExpenseDAO{
-
+public class ExpenseServiceImpl implements ExpenseService{
     @Override
     public Expense createExpense(Expense expense) {
         return null;
@@ -23,11 +20,6 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
 
     @Override
     public Expense deleteExpense(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Expense> readAllExpenses() {
         return null;
     }
 }

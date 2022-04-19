@@ -8,7 +8,8 @@ public interface EmployeeService {
 
     Employee readEmployee(int id);
 
-    Employee updateEmployee(int id);
+    Employee updateEmployee(Employee employee);
 
-    Employee deleteEmployee(int id);
+    boolean deleteEmployee(int id);
+
 }

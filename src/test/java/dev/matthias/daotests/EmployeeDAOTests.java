@@ -3,33 +3,81 @@ package dev.matthias.daotests;
 import dev.matthias.data.EmployeeDAO;
 import dev.matthias.data.EmployeeDAOPostgres;
 import dev.matthias.entities.Employee;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class EmployeeDAOTests {
 
-    static EmployeeDAO employeeDAO = new EmployeeDAOPostgres();
-    static Employee employee = null;
+    EmployeeDAO employeeDAO;
+    Employee testEmployee;
+
+    @BeforeAll
+    static void setUpAll() {
+        System.out.println("Employee DAO Tests.");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        employeeDAO = new EmployeeDAOPostgres();
+        testEmployee = new Employee(1000, "Bob", "Barker");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        employeeDAO = null;
+        testEmployee = null;
+    }
 
     @Test
     @Order(1)
+    @DisplayName("Create Employee")
     void createEmployee() {
-        Employee caesar = new Employee("Julius", "Caesar");
-        Employee savedEmployee = employeeDAO.createEmployee(caesar);
-        EmployeeDAOTests.employee = caesar;
+        Employee savedEmployee = employeeDAO.createEmployee(testEmployee);
         Assertions.assertNotNull(savedEmployee);
     }
 
     @Test
-    @Order(2)
-    void readEmployee() {
-        Employee retrievedEmployee = employeeDAO.readEmployee(employee.getId());
-        Assertions.assertEquals("Julius", retrievedEmployee.getFirstName());
+    @DisplayName("Create Employee With No ID")
+    void createEmployeeWithNoID() {
+        Assertions.assertNull(employeeDAO.createEmployee(new Employee("Bill", "Bob")));
     }
 
     @Test
-    void deleteEmployee() {
-
+    @Order(2)
+    @DisplayName("Read Employee Based On ID")
+    void readEmployee() {
+        Employee retrievedEmployee = employeeDAO.readEmployee(testEmployee.getId());
+        Assertions.assertEquals("Bob", retrievedEmployee.getFirstName());
     }
+
+    @Test
+    @Order(3)
+    @DisplayName("Update Employee")
+    void updateEmployee() {
+        Employee updatedEmployee = employeeDAO.readEmployee(testEmployee.getId());
+        updatedEmployee.setFirstName("Billy");
+        updatedEmployee = employeeDAO.updateEmployee(updatedEmployee);
+        Assertions.assertEquals("Billy", updatedEmployee.getFirstName());
+    }
+
+    @Test
+    @DisplayName("Update Nonexistent Employee")
+    void updateNonexistentEmployee() {
+        Employee employee = new Employee(1111, "Hank", "Hill");
+        Assertions.assertNull(employeeDAO.updateEmployee(employee));
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Delete Employee")
+    void deleteEmployee() {
+        Assertions.assertTrue(employeeDAO.deleteEmployee(testEmployee.getId()));
+    }
+
+    @Test
+    @DisplayName("Delete Nonexistent Employee")
+    void deleteNonexistentEmployee() {
+        Assertions.assertFalse(employeeDAO.deleteEmployee(5));
+    }
+
+
 }
