@@ -58,9 +58,14 @@ public class App {
         app.put("/employees/{id}", context -> {
             int id = Integer.parseInt(context.pathParam("id"));
             Employee employee = employeeService.readEmployee(id);
+            String body = context.body();
+
             if(null == employee) {
                 context.status(404);
             } else {
+                Employee updatedEmployee = gson.fromJson(body, Employee.class);
+                employee.setFirstName(updatedEmployee.getFirstName());
+                employee.setLastName(updatedEmployee.getLastName());
                 employee = employeeService.updateEmployee(employee);
                 context.status(200);
                 context.result("Updated: " + employee.getId());

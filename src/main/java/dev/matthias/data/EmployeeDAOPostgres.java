@@ -2,6 +2,7 @@ package dev.matthias.data;
 
 import dev.matthias.entities.Employee;
 import dev.matthias.utilities.ConnectionUtil;
+import dev.matthias.utilities.EmployeeNotFoundException;
 import dev.matthias.utilities.LogLevel;
 import dev.matthias.utilities.Logger;
 
@@ -16,7 +17,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     @Override
     public Employee createEmployee(Employee employee) {
         try {
-            if(employee.getId() == 0) return null;
+            if(employee.getId() < 1000 || employee.getId() > 9999) return null;
             String query = "insert into employee values (?, ?, ?)";
             Connection conn = ConnectionUtil.createConnection();
             PreparedStatement ps = conn.prepareStatement(query);
@@ -35,7 +36,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     }
 
     @Override
-    public Employee readEmployee(int id) {
+    public Employee readEmployee(int id) throws EmployeeNotFoundException{
         try {
             String query = "select * from employee where employee_id = ?";
             Connection conn = ConnectionUtil.createConnection();
@@ -44,7 +45,8 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 return new Employee(rs.getInt(1), rs.getString(2), rs.getString(3));
-            } else return null;
+            } else throw new EmployeeNotFoundException();
+
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

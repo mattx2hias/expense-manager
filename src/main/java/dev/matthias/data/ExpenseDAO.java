@@ -1,6 +1,7 @@
 package dev.matthias.data;
 
 import dev.matthias.entities.Expense;
+import dev.matthias.utilities.ExpenseAlreadyApprovedOrDeniedException;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ExpenseDAO {
 
     Expense readExpense(int id);
 
-    Expense updateExpense(Expense expense);
+    Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException;
 
     Expense deleteExpense(int id);
 

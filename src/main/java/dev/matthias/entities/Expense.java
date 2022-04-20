@@ -13,7 +13,7 @@ public class Expense {
     private int id;
     private String name;
     private Status status = Status.PENDING;
-    private int cost;
+    private double cost;
     private int issuerId;
 
 }

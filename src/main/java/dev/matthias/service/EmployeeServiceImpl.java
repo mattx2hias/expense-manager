@@ -3,6 +3,7 @@ package dev.matthias.service;
 import dev.matthias.data.EmployeeDAO;
 import dev.matthias.data.EmployeeDAOPostgres;
 import dev.matthias.entities.Employee;
+import dev.matthias.utilities.EmployeeNotFoundException;
 
 import java.util.Random;
 
@@ -12,12 +13,14 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee createEmployee(Employee employee) {
-        employee.setId(this.generateId());
+        if(employee.getId() == 0) {
+            employee.setId(this.generateId());
+        }
         return employeeDAO.createEmployee(employee);
     }
 
     @Override
-    public Employee readEmployee(int id) {
+    public Employee readEmployee(int id) throws EmployeeNotFoundException {
         return employeeDAO.readEmployee(id);
     }
 
