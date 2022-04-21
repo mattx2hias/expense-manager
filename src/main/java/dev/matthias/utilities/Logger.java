@@ -8,6 +8,8 @@ import java.util.Date;
 
 public class Logger {
 
+    private Logger(){}
+
     public static void log(String msg, LogLevel lvl) {
         String logMsg = "["+lvl+"] " + msg + " " + new Date() + "\n";
 

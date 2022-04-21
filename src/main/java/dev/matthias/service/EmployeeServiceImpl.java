@@ -10,6 +10,7 @@ import java.util.Random;
 public class EmployeeServiceImpl implements EmployeeService{
 
     EmployeeDAO employeeDAO = new EmployeeDAOPostgres();
+    private static final Random rand = new Random();
 
     @Override
     public Employee createEmployee(Employee employee) {
@@ -35,10 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     public int generateId() {
-        int id = 0;
-        Random rand = new Random();
-        id = rand.nextInt(9999-1000) + 1000;
-        return id;
+        return rand.nextInt(9999-1000) + 1000;
     }
 
 }

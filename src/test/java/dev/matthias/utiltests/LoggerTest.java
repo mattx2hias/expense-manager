@@ -5,7 +5,7 @@ import dev.matthias.utilities.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class LoggerTest {
+class LoggerTest {
 
     @Test
     @DisplayName("Should add all log types to log file")

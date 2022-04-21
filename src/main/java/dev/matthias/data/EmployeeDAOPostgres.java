@@ -93,8 +93,8 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
 
     @Override
     public List<Employee> readAllEmployees() {
+        List<Employee> employees = new ArrayList<>();
         try {
-            List<Employee> employees = new ArrayList<>();
             String query = "select * from employee";
             Connection conn = ConnectionUtil.createConnection();
             PreparedStatement ps = conn.prepareStatement(query);
@@ -109,7 +109,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
             return employees;
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return employees;
         }
     }
 }

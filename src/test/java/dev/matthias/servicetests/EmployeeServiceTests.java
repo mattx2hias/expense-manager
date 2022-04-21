@@ -6,7 +6,7 @@ import dev.matthias.service.EmployeeServiceImpl;
 import dev.matthias.utilities.EmployeeNotFoundException;
 import org.junit.jupiter.api.*;
 
-public class EmployeeServiceTests {
+class EmployeeServiceTests {
 
     EmployeeService employeeService;
     Employee testEmployee;

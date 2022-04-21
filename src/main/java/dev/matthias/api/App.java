@@ -30,15 +30,15 @@ public class App {
         });
 
         app.get("/employees", context -> {
-            String display = "";
+            StringBuilder display = new StringBuilder();
             List<Employee> employees = employeeDAO.readAllEmployees();
             if(employees.isEmpty()) {
                 context.status(404);
                 context.result("No employees found.");
             } else {
-                for(Employee e : employees) display += e.toString() + "\n";
+                for(Employee e : employees) display.append(e.toString()).append("\n");
                 context.status(200);
-                context.result(display);
+                context.result(String.valueOf(display));
             }
 
         });

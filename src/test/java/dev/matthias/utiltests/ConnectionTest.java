@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 
-public class ConnectionTest {
+class ConnectionTest {
 
     @Test
     @DisplayName("Should connect to DB")
