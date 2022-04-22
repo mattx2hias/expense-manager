@@ -4,10 +4,10 @@ import dev.matthias.data.EmployeeDAO;
 import dev.matthias.data.EmployeeDAOPostgres;
 import dev.matthias.data.ExpenseDAO;
 import dev.matthias.data.ExpenseDAOPostgres;
-import dev.matthias.entities.Employee;
 import dev.matthias.entities.Expense;
 import dev.matthias.utilities.EmployeeNotFoundException;
 import dev.matthias.utilities.ExpenseAlreadyApprovedOrDeniedException;
+import dev.matthias.utilities.ExpenseNotFoundException;
 import dev.matthias.utilities.Status;
 
 public class ExpenseServiceImpl implements ExpenseService{
@@ -24,20 +24,30 @@ public class ExpenseServiceImpl implements ExpenseService{
 
     @Override
     public Expense readExpense(int id) {
-        return null;
+        try {
+            return expenseDAO.readExpense(id);
+        } catch (ExpenseNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException {
         if(expense.getStatus().equals(Status.APPROVED))
-            throw new ExpenseAlreadyApprovedOrDeniedException("\nExpense already approved.");
+            throw new ExpenseAlreadyApprovedOrDeniedException("Expense already approved.");
         if(expense.getStatus().equals(Status.DENIED))
-            throw new ExpenseAlreadyApprovedOrDeniedException("\nExpense already denied.");
+            throw new ExpenseAlreadyApprovedOrDeniedException("Expense already denied.");
         return null;
     }
 
     @Override
-    public Expense deleteExpense(int id) {
-        return null;
+    public boolean deleteExpense(int id) {
+        try {
+            return expenseDAO.deleteExpense(id);
+        } catch (ExpenseNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

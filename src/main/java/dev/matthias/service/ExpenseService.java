@@ -12,5 +12,5 @@ public interface ExpenseService {
 
     Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException;
 
-    Expense deleteExpense(int id);
+    boolean deleteExpense(int id);
 }

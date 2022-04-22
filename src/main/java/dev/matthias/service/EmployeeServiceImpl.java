@@ -21,18 +21,30 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee readEmployee(int id) throws EmployeeNotFoundException {
-        return employeeDAO.readEmployee(id);
+    public Employee readEmployee(int id) {
+        try {
+            return employeeDAO.readEmployee(id);
+        } catch (EmployeeNotFoundException e) {
+            return null;
+        }
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        return employeeDAO.updateEmployee(employee);
+        try {
+            return employeeDAO.updateEmployee(employee);
+        } catch (EmployeeNotFoundException e) {
+            return null;
+        }
     }
 
     @Override
     public boolean deleteEmployee(int id) {
-        return employeeDAO.deleteEmployee(id);
+        try {
+            return employeeDAO.deleteEmployee(id);
+        } catch (EmployeeNotFoundException e) {
+            return false;
+        }
     }
 
     public int generateId() {

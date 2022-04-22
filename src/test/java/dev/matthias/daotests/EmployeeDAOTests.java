@@ -6,8 +6,6 @@ import dev.matthias.entities.Employee;
 import dev.matthias.utilities.EmployeeNotFoundException;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class EmployeeDAOTests {
 
@@ -61,21 +59,21 @@ class EmployeeDAOTests {
     
     @Test
     @DisplayName("Should not update nonexistent employee")
-    void shouldNotUpdateNonexistentEmployee() {
-        Employee employee = new Employee(1111, "Hank", "Hill");
-        Assertions.assertNull(employeeDAO.updateEmployee(employee));
+    void shouldNotUpdateNonexistentEmployee() throws EmployeeNotFoundException {
+        Employee employee = new Employee(100, "Hank", "Hill");
+        Assertions.assertThrows(EmployeeNotFoundException.class, () -> employeeDAO.updateEmployee(employee));
     }
     
     @Test
     @Order(4)
     @DisplayName("Should delete employee record")
-    void shouldDeleteEmployeeRecord() {
+    void shouldDeleteEmployeeRecord() throws EmployeeNotFoundException {
         Assertions.assertTrue(employeeDAO.deleteEmployee(testEmployee.getId()));
     }
     
     @Test
     @DisplayName("Should not delete nonexistent employee")
-    void shouldNotDeleteNonexistentEmployee() {
-        Assertions.assertFalse(employeeDAO.deleteEmployee(5));
+    void shouldNotDeleteNonexistentEmployee() throws EmployeeNotFoundException {
+        Assertions.assertThrows(EmployeeNotFoundException.class, () -> employeeDAO.deleteEmployee(5));
     }
 }

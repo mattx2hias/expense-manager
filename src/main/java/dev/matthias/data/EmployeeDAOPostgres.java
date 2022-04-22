@@ -54,7 +54,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     }
 
     @Override
-    public Employee updateEmployee(Employee employee) {
+    public Employee updateEmployee(Employee employee) throws EmployeeNotFoundException {
         try {
             String query = "update employee set first_name = ?, last_name = ? where employee_id = ?";
             Connection conn = ConnectionUtil.createConnection();
@@ -66,7 +66,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
             if(ps.executeUpdate() == 1) {
                 Logger.log("Updated employee: " + employee.getId(), LogLevel.INFO);
                 return employee;
-            } else return null;
+            } else throw new EmployeeNotFoundException();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -74,7 +74,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     }
 
     @Override
-    public boolean deleteEmployee(int id) {
+    public boolean deleteEmployee(int id) throws EmployeeNotFoundException {
         try {
             String query = "delete from employee where employee_id = ?";
             Connection conn = ConnectionUtil.createConnection();
@@ -84,7 +84,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
             if(ps.executeUpdate() == 1) {
                 Logger.log("Deleted employee: " + id, LogLevel.INFO);
                 return true;
-            } else return false;
+            } else throw new EmployeeNotFoundException();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

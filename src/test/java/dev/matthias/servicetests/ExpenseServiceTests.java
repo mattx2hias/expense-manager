@@ -1,41 +1,47 @@
 package dev.matthias.servicetests;
 
-import dev.matthias.entities.Employee;
 import dev.matthias.entities.Expense;
-import dev.matthias.service.EmployeeService;
-import dev.matthias.service.EmployeeServiceImpl;
 import dev.matthias.service.ExpenseService;
 import dev.matthias.service.ExpenseServiceImpl;
-import dev.matthias.utilities.Status;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import dev.matthias.utilities.EmployeeNotFoundException;
+import dev.matthias.utilities.ExpenseAlreadyApprovedOrDeniedException;
+import org.junit.jupiter.api.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ExpenseServiceTests {
 
-    EmployeeService employeeService;
-    Employee testEmployee;
-    ExpenseService expenseService;
-    Expense testExpense;
+    static ExpenseService expenseService = new ExpenseServiceImpl();
+    static Expense testExpense = new Expense(999, "Crate Of Bananas", 100.25, 1);
 
-    @BeforeAll
-    static void setUpAll() {
-        System.out.println("Expense Service Tests.");
+    @Test
+    @Order(1)
+    @DisplayName("Should create new expense")
+    void shouldCreateNewExpense() throws EmployeeNotFoundException {
+        Expense savedExpense = expenseService.createExpense(testExpense);
+        Assertions.assertEquals(999, savedExpense.getId());
     }
 
-    @BeforeEach
-    void setUp() {
-        employeeService = new EmployeeServiceImpl();
-        testEmployee = new Employee(1000, "Bob", "Barker");
-        expenseService = new ExpenseServiceImpl();
-        testExpense = new Expense(1000, "Crate Of Bananas", Status.PENDING, 1, testEmployee.getId());
+    @Test
+    @Order(2)
+    @DisplayName("Should read expense")
+    void shouldReadExpense() {
+        Expense retrievedExpense = expenseService.readExpense(testExpense.getId());
+        Assertions.assertEquals(999, retrievedExpense.getId());
     }
 
-    @AfterEach
-    public void tearDown() {
-        employeeService = null;
-        testEmployee = null;
-        testExpense = null;
-        expenseService = null;
+    @Test
+    @Order(3)
+    @DisplayName("Should update expense")
+    void shouldUpdateExpense() throws ExpenseAlreadyApprovedOrDeniedException {
+        testExpense.setName("Box Of Bananas");
+        Expense updatedExpense = expenseService.updateExpense(testExpense);
+        Assertions.assertEquals("Box Of Bananas", updatedExpense.getName());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Should delete expense")
+    void shouldDeleteExpense() {
+        Assertions.assertTrue(expenseService.deleteExpense(testExpense.getId()));
     }
 }

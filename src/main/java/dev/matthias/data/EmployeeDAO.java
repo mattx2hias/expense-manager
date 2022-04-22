@@ -11,9 +11,9 @@ public interface EmployeeDAO {
 
     Employee readEmployee(int id) throws EmployeeNotFoundException;
 
-    Employee updateEmployee(Employee employee);
+    Employee updateEmployee(Employee employee) throws EmployeeNotFoundException;
 
-    boolean deleteEmployee(int id);
+    boolean deleteEmployee(int id) throws EmployeeNotFoundException;
 
     List<Employee> readAllEmployees();
 }
