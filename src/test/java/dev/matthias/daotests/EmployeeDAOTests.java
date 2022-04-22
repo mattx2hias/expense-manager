@@ -8,27 +8,11 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class EmployeeDAOTests {
 
-    EmployeeDAO employeeDAO;
-    Employee testEmployee;
-
-    @BeforeAll
-    static void setUpAll() {
-        System.out.println("Employee DAO Tests.");
-    }
-
-    @BeforeEach
-    public void setUp() {
-        employeeDAO = new EmployeeDAOPostgres();
-        testEmployee = new Employee(1000, "Bob", "Barker");
-    }
-
-    @AfterEach
-    public void tearDown() {
-        employeeDAO = null;
-        testEmployee = null;
-    }
+    static EmployeeDAO employeeDAO = new EmployeeDAOPostgres();
+    static Employee testEmployee = new Employee(1000, "Bob", "Barker");
     
     @Test
     @Order(1)
@@ -62,10 +46,7 @@ class EmployeeDAOTests {
     @Test
     @DisplayName("Should not get nonexistent employee")
     void shouldNotGetNonexistentEmployee() {
-        Throwable exception = assertThrows(EmployeeNotFoundException.class,
-                () -> { employeeDAO.readEmployee(0); });
-
-        Assertions.assertEquals("\nEmployee does not exist.", exception.getMessage());
+        Assertions.assertThrows(EmployeeNotFoundException.class, () -> employeeDAO.readEmployee(0));
     }
     
     @Test

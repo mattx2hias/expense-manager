@@ -14,7 +14,7 @@ public interface ExpenseDAO {
 
     Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException;
 
-    boolean deleteExpense(int id);
+    boolean deleteExpense(int id) throws ExpenseNotFoundException;
 
     List<Expense> readAllExpenses();
 }

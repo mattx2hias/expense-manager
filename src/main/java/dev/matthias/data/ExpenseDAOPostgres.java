@@ -61,13 +61,8 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
     }
 
     @Override
-    public Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException {
+    public Expense updateExpense(Expense expense) {
         try {
-            if(expense.getStatus().equals(Status.APPROVED))
-                throw new ExpenseAlreadyApprovedOrDeniedException("\nExpense already approved.");
-            if(expense.getStatus().equals(Status.DENIED))
-                throw new ExpenseAlreadyApprovedOrDeniedException("\nExpense already denied.");
-
             String query = "update expense set name = ?, status = ?, cost = ? where expense_id = ?";
             Connection conn = ConnectionUtil.createConnection();
             PreparedStatement ps = conn.prepareStatement(query);
@@ -87,7 +82,7 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
     }
 
     @Override
-    public boolean deleteExpense(int id) {
+    public boolean deleteExpense(int id) throws ExpenseNotFoundException {
         try {
             String query = "delete from expense where expense_id = ?";
             Connection conn = ConnectionUtil.createConnection();
@@ -97,7 +92,7 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
             if(ps.executeUpdate() == 1) {
                 Logger.log("Deleted employee: " + id, LogLevel.INFO);
                 return true;
-            } else return false;
+            } else throw new ExpenseNotFoundException();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
