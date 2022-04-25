@@ -38,7 +38,7 @@ public class ExpenseServiceImpl implements ExpenseService{
             throw new ExpenseAlreadyApprovedOrDeniedException("Expense already approved.");
         if(expense.getStatus().equals(Status.DENIED))
             throw new ExpenseAlreadyApprovedOrDeniedException("Expense already denied.");
-        return null;
+        return expenseDAO.updateExpense(expense);
     }
 
     @Override
