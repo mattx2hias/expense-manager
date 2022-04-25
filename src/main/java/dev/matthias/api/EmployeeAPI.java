@@ -83,12 +83,10 @@ public class EmployeeAPI {
             int id = Integer.parseInt(context.pathParam("id"));
             if(employeeService.deleteEmployee(id)) {
                 context.status(200);
-                context.result("Deleted: " + id);
-            } else if(null == employeeService.readEmployee(id)) {
+                context.result("Deleted employee: " + id);
+            } else  {
                 context.status(404);
                 context.result("Employee: " + id + "not found.");
-            } else {
-                context.status(400);
             }
         };
     }

@@ -103,8 +103,8 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
             Connection conn = ConnectionUtil.createConnection();
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            Expense e = new Expense();
             while(rs.next()) {
+                Expense e = new Expense();
                 e.setId(rs.getInt(1));
                 e.setName(rs.getString(2));
                 Status s = ParseStatus.getStatus(rs.getString(3));

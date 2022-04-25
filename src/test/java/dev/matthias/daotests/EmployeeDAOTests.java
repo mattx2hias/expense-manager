@@ -6,6 +6,8 @@ import dev.matthias.entities.Employee;
 import dev.matthias.exceptions.EmployeeNotFoundException;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class EmployeeDAOTests {
 
@@ -45,6 +47,19 @@ class EmployeeDAOTests {
     @DisplayName("Should not get nonexistent employee")
     void shouldNotGetNonexistentEmployee() {
         Assertions.assertThrows(EmployeeNotFoundException.class, () -> employeeDAO.readEmployee(0));
+    }
+
+    @Test
+    @DisplayName("Should not store duplicate expenses")
+    void shouldNotStoreDuplicateExpenses() {
+        List<Employee> employeeList = employeeDAO.readAllEmployees();
+        Assertions.assertNotEquals(employeeList.get(0), employeeList.get(1));
+    }
+    
+    @Test
+    @DisplayName("Should get not null employee list")
+    void shouldGetNotNullEmployeeList() {
+        Assertions.assertNotNull(employeeDAO.readAllEmployees());
     }
     
     @Test

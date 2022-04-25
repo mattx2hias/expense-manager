@@ -5,6 +5,7 @@ import dev.matthias.service.ExpenseService;
 import dev.matthias.service.ExpenseServiceImpl;
 import dev.matthias.exceptions.EmployeeNotFoundException;
 import dev.matthias.exceptions.ExpenseAlreadyApprovedOrDeniedException;
+import dev.matthias.utilities.Status;
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -36,6 +37,22 @@ class ExpenseServiceTests {
         testExpense.setName("Box Of Bananas");
         Expense updatedExpense = expenseService.updateExpense(testExpense);
         Assertions.assertEquals("Box Of Bananas", updatedExpense.getName());
+    }
+    
+    @Test
+    @DisplayName("Should not update approved expense")
+    void shouldNotUpdateApprovedExpense() {
+        testExpense.setStatus(Status.APPROVED);
+        Assertions.assertThrows(ExpenseAlreadyApprovedOrDeniedException.class,
+                () -> expenseService.updateExpense(testExpense));
+    }
+
+    @Test
+    @DisplayName("Should not update denied expense")
+    void shouldNotUpdateDeniedExpense() {
+        testExpense.setStatus(Status.DENIED);
+        Assertions.assertThrows(ExpenseAlreadyApprovedOrDeniedException.class,
+                () -> expenseService.updateExpense(testExpense));
     }
 
     @Test

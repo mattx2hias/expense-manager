@@ -8,6 +8,8 @@ import dev.matthias.exceptions.ExpenseNotFoundException;
 import dev.matthias.utilities.Status;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ExpenseDAOTests {
 
@@ -34,6 +36,19 @@ class ExpenseDAOTests {
     @DisplayName("Should not get nonexistent expense record")
     void shouldNotGetNonexistentExpenseRecord() {
         Assertions.assertThrows(ExpenseNotFoundException.class, () -> expenseDAO.readExpense(0));
+    }
+
+    @Test
+    @DisplayName("Should get not null expense list")
+    void shouldGetNotNullExpenseList() {
+        Assertions.assertNotNull(expenseDAO.readAllExpenses());
+    }
+
+    @Test
+    @DisplayName("Should not store duplicate expenses")
+    void shouldNotStoreDuplicateExpenses() {
+        List<Expense> expenseList = expenseDAO.readAllExpenses();
+        Assertions.assertNotEquals(expenseList.get(0), expenseList.get(1));
     }
 
     @Test
