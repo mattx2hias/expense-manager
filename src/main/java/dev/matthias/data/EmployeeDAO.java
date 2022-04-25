@@ -1,7 +1,7 @@
 package dev.matthias.data;
 
 import dev.matthias.entities.Employee;
-import dev.matthias.utilities.EmployeeNotFoundException;
+import dev.matthias.exceptions.EmployeeNotFoundException;
 
 import java.util.List;
 

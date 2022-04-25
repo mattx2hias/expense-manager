@@ -13,5 +13,12 @@ public class App {
         app.put("/employees/{id}", EmployeeAPI.updateEmployee());
         app.delete("employees/{id}", EmployeeAPI.deleteEmployee());
 
+        app.post("/expenses", ExpenseAPI.createExpense());
+        app.get("/expenses", ExpenseAPI.readAllExpenses());
+        app.get("/expenses", ExpenseAPI.readExpenseStatus());
+        app.get("/expenses/{id}", ExpenseAPI.readExpense());
+        app.put("/expenses/{id}", ExpenseAPI.updateExpense());
+        app.patch("/expenses/{id}/{status}", ExpenseAPI.approveOrDenyExpense());
+        app.delete("/expenses/{id}", ExpenseAPI.deleteExpense());
     }
 }

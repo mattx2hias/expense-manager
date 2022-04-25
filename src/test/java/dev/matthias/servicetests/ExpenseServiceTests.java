@@ -3,8 +3,8 @@ package dev.matthias.servicetests;
 import dev.matthias.entities.Expense;
 import dev.matthias.service.ExpenseService;
 import dev.matthias.service.ExpenseServiceImpl;
-import dev.matthias.utilities.EmployeeNotFoundException;
-import dev.matthias.utilities.ExpenseAlreadyApprovedOrDeniedException;
+import dev.matthias.exceptions.EmployeeNotFoundException;
+import dev.matthias.exceptions.ExpenseAlreadyApprovedOrDeniedException;
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

@@ -1,8 +1,8 @@
 package dev.matthias.service;
 
 import dev.matthias.entities.Expense;
-import dev.matthias.utilities.EmployeeNotFoundException;
-import dev.matthias.utilities.ExpenseAlreadyApprovedOrDeniedException;
+import dev.matthias.exceptions.EmployeeNotFoundException;
+import dev.matthias.exceptions.ExpenseAlreadyApprovedOrDeniedException;
 
 public interface ExpenseService {
 

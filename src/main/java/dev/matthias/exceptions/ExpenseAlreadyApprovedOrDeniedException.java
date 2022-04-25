@@ -1,4 +1,4 @@
-package dev.matthias.utilities;
+package dev.matthias.exceptions;
 
 public class ExpenseAlreadyApprovedOrDeniedException extends Exception{
     public ExpenseAlreadyApprovedOrDeniedException(String msg) {

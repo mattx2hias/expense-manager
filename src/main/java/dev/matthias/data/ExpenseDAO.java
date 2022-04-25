@@ -1,8 +1,8 @@
 package dev.matthias.data;
 
 import dev.matthias.entities.Expense;
-import dev.matthias.utilities.ExpenseAlreadyApprovedOrDeniedException;
-import dev.matthias.utilities.ExpenseNotFoundException;
+import dev.matthias.exceptions.ExpenseAlreadyApprovedOrDeniedException;
+import dev.matthias.exceptions.ExpenseNotFoundException;
 
 import java.util.List;
 

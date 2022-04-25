@@ -3,8 +3,8 @@ package dev.matthias.daotests;
 import dev.matthias.data.ExpenseDAO;
 import dev.matthias.data.ExpenseDAOPostgres;
 import dev.matthias.entities.Expense;
-import dev.matthias.utilities.ExpenseAlreadyApprovedOrDeniedException;
-import dev.matthias.utilities.ExpenseNotFoundException;
+import dev.matthias.exceptions.ExpenseAlreadyApprovedOrDeniedException;
+import dev.matthias.exceptions.ExpenseNotFoundException;
 import dev.matthias.utilities.Status;
 import org.junit.jupiter.api.*;
 

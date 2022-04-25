@@ -3,7 +3,7 @@ package dev.matthias.daotests;
 import dev.matthias.data.EmployeeDAO;
 import dev.matthias.data.EmployeeDAOPostgres;
 import dev.matthias.entities.Employee;
-import dev.matthias.utilities.EmployeeNotFoundException;
+import dev.matthias.exceptions.EmployeeNotFoundException;
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -59,7 +59,7 @@ class EmployeeDAOTests {
     
     @Test
     @DisplayName("Should not update nonexistent employee")
-    void shouldNotUpdateNonexistentEmployee() throws EmployeeNotFoundException {
+    void shouldNotUpdateNonexistentEmployee() {
         Employee employee = new Employee(100, "Hank", "Hill");
         Assertions.assertThrows(EmployeeNotFoundException.class, () -> employeeDAO.updateEmployee(employee));
     }
@@ -73,7 +73,7 @@ class EmployeeDAOTests {
     
     @Test
     @DisplayName("Should not delete nonexistent employee")
-    void shouldNotDeleteNonexistentEmployee() throws EmployeeNotFoundException {
+    void shouldNotDeleteNonexistentEmployee() {
         Assertions.assertThrows(EmployeeNotFoundException.class, () -> employeeDAO.deleteEmployee(5));
     }
 }

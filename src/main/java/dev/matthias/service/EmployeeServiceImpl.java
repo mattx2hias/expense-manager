@@ -3,7 +3,7 @@ package dev.matthias.service;
 import dev.matthias.data.EmployeeDAO;
 import dev.matthias.data.EmployeeDAOPostgres;
 import dev.matthias.entities.Employee;
-import dev.matthias.utilities.EmployeeNotFoundException;
+import dev.matthias.exceptions.EmployeeNotFoundException;
 
 import java.util.Random;
 

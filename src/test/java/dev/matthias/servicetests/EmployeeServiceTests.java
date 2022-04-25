@@ -3,7 +3,7 @@ package dev.matthias.servicetests;
 import dev.matthias.entities.Employee;
 import dev.matthias.service.EmployeeService;
 import dev.matthias.service.EmployeeServiceImpl;
-import dev.matthias.utilities.EmployeeNotFoundException;
+import dev.matthias.exceptions.EmployeeNotFoundException;
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

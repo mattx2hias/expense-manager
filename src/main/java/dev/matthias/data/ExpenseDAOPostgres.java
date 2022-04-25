@@ -1,6 +1,7 @@
 package dev.matthias.data;
 
 import dev.matthias.entities.Expense;
+import dev.matthias.exceptions.ExpenseNotFoundException;
 import dev.matthias.utilities.*;
 
 import java.sql.Connection;
@@ -45,12 +46,7 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-                Status s;
-                switch(rs.getString(3)) {
-                    case "APPROVED": s = Status.APPROVED; break;
-                    case "DENIED": s = Status.DENIED; break;
-                    default: s = Status.PENDING; break;
-                }
+                Status s = ParseStatus.getStatus(rs.getString(3));
                 return new Expense(rs.getInt(1), rs.getString(2), s, rs.getDouble(4), rs.getInt(5));
             } else throw new ExpenseNotFoundException();
 
@@ -111,12 +107,7 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
             while(rs.next()) {
                 e.setId(rs.getInt(1));
                 e.setName(rs.getString(2));
-                Status s;
-                switch(rs.getString(3)) {
-                    case "APPROVED": s = Status.APPROVED; break;
-                    case "DENIED": s = Status.DENIED; break;
-                    default: s = Status.PENDING; break;
-                }
+                Status s = ParseStatus.getStatus(rs.getString(3));
                 e.setStatus(s);
                 e.setCost(rs.getDouble(4));
                 e.setIssuerId(rs.getInt(5));

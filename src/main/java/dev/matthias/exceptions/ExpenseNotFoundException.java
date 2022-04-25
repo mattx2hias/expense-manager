@@ -1,6 +1,4 @@
-package dev.matthias.utilities;
-
-import dev.matthias.entities.Expense;
+package dev.matthias.exceptions;
 
 public class ExpenseNotFoundException extends Exception{
     public ExpenseNotFoundException() {

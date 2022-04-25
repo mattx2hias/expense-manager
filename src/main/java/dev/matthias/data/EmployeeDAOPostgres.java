@@ -2,7 +2,7 @@ package dev.matthias.data;
 
 import dev.matthias.entities.Employee;
 import dev.matthias.utilities.ConnectionUtil;
-import dev.matthias.utilities.EmployeeNotFoundException;
+import dev.matthias.exceptions.EmployeeNotFoundException;
 import dev.matthias.utilities.LogLevel;
 import dev.matthias.utilities.Logger;
 
