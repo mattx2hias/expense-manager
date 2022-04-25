@@ -8,6 +8,7 @@ import dev.matthias.entities.Expense;
 import dev.matthias.exceptions.EmployeeNotFoundException;
 import dev.matthias.exceptions.ExpenseAlreadyApprovedOrDeniedException;
 import dev.matthias.exceptions.ExpenseNotFoundException;
+import dev.matthias.utilities.GenerateID;
 import dev.matthias.utilities.Status;
 
 public class ExpenseServiceImpl implements ExpenseService{
@@ -17,9 +18,12 @@ public class ExpenseServiceImpl implements ExpenseService{
 
     @Override
     public Expense createExpense(Expense expense) throws EmployeeNotFoundException {
-        if(employeeDAO.readAllEmployees().stream().noneMatch(e -> e.getId() == expense.getIssuerId()))
-            throw new EmployeeNotFoundException();
-        else return expenseDAO.createExpense(expense);
+        expense.setId(GenerateID.generateRandomID());
+        if(expense.getStatus() == null) expense.setStatus(Status.PENDING);
+        return expenseDAO.createExpense(expense);
+//        if(employeeDAO.readAllEmployees().stream().noneMatch(e -> e.getId() == expense.getIssuerId()))
+//            throw new EmployeeNotFoundException();
+//        else return expenseDAO.createExpense(expense);
     }
 
     @Override

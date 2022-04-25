@@ -14,16 +14,16 @@ import java.util.List;
 class ExpenseDAOTests {
 
     static ExpenseDAO expenseDAO = new ExpenseDAOPostgres();
-    static Expense testExpense = new Expense(1000, "Crate Of Bananas", Status.PENDING, 100.25, 1);
+    static Expense testExpense = new Expense("Crate Of Bananas", 100.25, 1);
 
     @Test
     @Order(1)
-    @DisplayName("Should create new expense")
-    void shouldCreateNewExpense() {
+    @DisplayName("Should create expense")
+    void shouldCreateExpense() {
         Expense savedExpense = expenseDAO.createExpense(testExpense);
         Assertions.assertNotNull(savedExpense);
     }
-
+    
     @Test
     @Order(2)
     @DisplayName("Should get expense record")

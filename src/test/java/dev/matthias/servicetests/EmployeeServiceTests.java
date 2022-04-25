@@ -64,6 +64,7 @@ class EmployeeServiceTests {
     @Order(5)
     @DisplayName("Should delete employee")
     void shouldDeleteEmployee() {
+        Assertions.assertTrue(employeeService.deleteEmployee(1000));
         Assertions.assertTrue(employeeService.deleteEmployee(testEmployee.getId()));
     }
 
@@ -71,14 +72,6 @@ class EmployeeServiceTests {
     @DisplayName("Should not delete nonexistent employee")
     void shouldNotDeleteNonexistentEmployee() {
         Assertions.assertFalse(employeeService.deleteEmployee(999));
-    }
-
-
-    @Test
-    @DisplayName("Should generate unique random 4 digit number")
-    void shouldGenerateUniqueRandom4DigitNumber() {
-        EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
-        Assertions.assertNotEquals(employeeServiceImpl.generateId(), employeeServiceImpl.generateId());
     }
 
 }

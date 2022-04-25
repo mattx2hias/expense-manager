@@ -16,14 +16,13 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
     @Override
     public Expense createExpense(Expense expense) {
         try {
-            String query = "insert into expense values (?, ?, ?, ?, ?)";
+            String query = "insert into expense values (?, ?, ?, ?)";
             Connection conn = ConnectionUtil.createConnection();
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, expense.getId());
             ps.setString(2, expense.getName());
-            ps.setString(3, expense.getStatus().toString());
-            ps.setDouble(4, expense.getCost());
-            ps.setInt(5, expense.getIssuerId());
+            ps.setDouble(3, expense.getCost());
+            ps.setInt(4, expense.getIssuerId());
             if(ps.executeUpdate() == 1) {
                 Logger.log("Created expense: " + expense.getId(), LogLevel.INFO);
                 return expense;

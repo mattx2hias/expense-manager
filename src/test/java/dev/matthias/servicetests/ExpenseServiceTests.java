@@ -12,14 +12,25 @@ import org.junit.jupiter.api.*;
 class ExpenseServiceTests {
 
     static ExpenseService expenseService = new ExpenseServiceImpl();
-    static Expense testExpense = new Expense(999, "Crate Of Bananas", 100.25, 1);
+    static Expense testExpense = new Expense("Crate Of Bananas", 100.25, 1);
 
     @Test
     @Order(1)
     @DisplayName("Should create new expense")
     void shouldCreateNewExpense() throws EmployeeNotFoundException {
         Expense savedExpense = expenseService.createExpense(testExpense);
-        Assertions.assertEquals(999, savedExpense.getId());
+        Assertions.assertEquals("Crate Of Bananas", savedExpense.getName());
+        Assertions.assertEquals(100.25, savedExpense.getCost());
+        Assertions.assertEquals(1, savedExpense.getIssuerId());
+    }
+
+    @Test
+    @DisplayName("Should not create expense with no valid employee")
+    void shouldNotCreateExpenseWithNoValidEmployee() {
+        Expense expense = testExpense;
+        expense.setIssuerId(0);
+        Assertions.assertThrows(EmployeeNotFoundException.class,
+                () -> expenseService.createExpense(expense));
     }
 
     @Test
@@ -27,7 +38,7 @@ class ExpenseServiceTests {
     @DisplayName("Should read expense")
     void shouldReadExpense() {
         Expense retrievedExpense = expenseService.readExpense(testExpense.getId());
-        Assertions.assertEquals(999, retrievedExpense.getId());
+        Assertions.assertEquals("Crate Of Bananas", retrievedExpense.getName());
     }
 
     @Test

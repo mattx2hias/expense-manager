@@ -15,7 +15,7 @@ public class App {
 
         app.post("/expenses", ExpenseAPI.createExpense());
         app.get("/expenses", ExpenseAPI.readAllExpenses());
-        app.get("/expenses", ExpenseAPI.readExpenseStatus());
+        app.get("/expenses?status={status}", ExpenseAPI.readExpenseStatus());
         app.get("/expenses/{id}", ExpenseAPI.readExpense());
         app.put("/expenses/{id}", ExpenseAPI.updateExpense());
         app.patch("/expenses/{id}/{status}", ExpenseAPI.approveOrDenyExpense());

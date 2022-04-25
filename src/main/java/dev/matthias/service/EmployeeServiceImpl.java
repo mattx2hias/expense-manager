@@ -4,18 +4,19 @@ import dev.matthias.data.EmployeeDAO;
 import dev.matthias.data.EmployeeDAOPostgres;
 import dev.matthias.entities.Employee;
 import dev.matthias.exceptions.EmployeeNotFoundException;
+import dev.matthias.utilities.GenerateID;
 
 import java.util.Random;
 
 public class EmployeeServiceImpl implements EmployeeService{
 
     EmployeeDAO employeeDAO = new EmployeeDAOPostgres();
-    private static final Random rand = new Random();
+
 
     @Override
     public Employee createEmployee(Employee employee) {
         if(employee.getId() == 0) {
-            employee.setId(this.generateId());
+            employee.setId(GenerateID.generateRandomID());
         }
         return employeeDAO.createEmployee(employee);
     }
@@ -45,10 +46,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         } catch (EmployeeNotFoundException e) {
             return false;
         }
-    }
-
-    public int generateId() {
-        return rand.nextInt(9999-1000) + 1000;
     }
 
 }

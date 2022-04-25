@@ -30,8 +30,10 @@ public class ExpenseAPI {
                 Expense newExpense = expenseService.createExpense(
                         gson.fromJson(body, Expense.class));
                 context.status(201);
+                context.result("Created expense: " + newExpense.getId());
             } catch (EmployeeNotFoundException e) {
                 context.status(404);
+                context.result("Employee not found.");
             }
         };
     }

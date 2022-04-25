@@ -22,4 +22,10 @@ public class Expense {
         this.cost = cost;
         this.issuerId = issuerId;
     }
+
+    public Expense(String name, double cost, int id) {
+        this.name = name;
+        this.cost = cost;
+        this.id = id;
+    }
 }
