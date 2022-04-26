@@ -26,6 +26,6 @@ public class Expense {
     public Expense(String name, double cost, int id) {
         this.name = name;
         this.cost = cost;
-        this.id = id;
+        this.issuerId = id;
     }
 }

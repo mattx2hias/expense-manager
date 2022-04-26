@@ -20,10 +20,9 @@ public class ExpenseServiceImpl implements ExpenseService{
     public Expense createExpense(Expense expense) throws EmployeeNotFoundException {
         expense.setId(GenerateID.generateRandomID());
         if(expense.getStatus() == null) expense.setStatus(Status.PENDING);
-        return expenseDAO.createExpense(expense);
-//        if(employeeDAO.readAllEmployees().stream().noneMatch(e -> e.getId() == expense.getIssuerId()))
-//            throw new EmployeeNotFoundException();
-//        else return expenseDAO.createExpense(expense);
+        if(employeeDAO.readAllEmployees().stream().noneMatch(e -> e.getId() == expense.getIssuerId()))
+            throw new EmployeeNotFoundException();
+        else return expenseDAO.createExpense(expense);
     }
 
     @Override

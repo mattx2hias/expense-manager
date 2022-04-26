@@ -22,6 +22,9 @@ class ExpenseDAOTests {
     void shouldCreateExpense() {
         Expense savedExpense = expenseDAO.createExpense(testExpense);
         Assertions.assertNotNull(savedExpense);
+        Assertions.assertEquals(100.25, savedExpense.getCost());
+        Assertions.assertEquals("Crate Of Bananas", savedExpense.getName());
+        Assertions.assertEquals(1, savedExpense.getIssuerId());
     }
     
     @Test

@@ -19,6 +19,7 @@ class ExpenseServiceTests {
     @DisplayName("Should create new expense")
     void shouldCreateNewExpense() throws EmployeeNotFoundException {
         Expense savedExpense = expenseService.createExpense(testExpense);
+        testExpense.setId(savedExpense.getId());
         Assertions.assertEquals("Crate Of Bananas", savedExpense.getName());
         Assertions.assertEquals(100.25, savedExpense.getCost());
         Assertions.assertEquals(1, savedExpense.getIssuerId());
