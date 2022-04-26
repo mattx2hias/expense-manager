@@ -16,7 +16,7 @@ public class ExpenseDAOPostgres implements ExpenseDAO{
     @Override
     public Expense createExpense(Expense expense) {
         try {
-            String query = "insert into expense values (?, ?, ?, ?)";
+            String query = "insert into expense values (?, ?, default, ?, ?)";
             Connection conn = ConnectionUtil.createConnection();
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, expense.getId());

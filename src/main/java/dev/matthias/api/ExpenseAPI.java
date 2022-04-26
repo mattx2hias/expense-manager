@@ -38,36 +38,32 @@ public class ExpenseAPI {
         };
     }
 
-    static Handler readAllExpenses() {
+    static Handler readExpenses() {
         return context -> {
+            String param = context.queryParam("status");
             StringBuilder display = new StringBuilder();
             List<Expense> expenses = expenseDAO.readAllExpenses();
             if(expenses.isEmpty()) {
                 context.status(404);
                 context.result("No expenses found.");
+            }
+            if(param != null) {
+                Status status = ParseStatus.getStatus(param.toUpperCase(Locale.ROOT));
+                display = readExpenseStatus(status, expenses);
+                context.status(200);
             } else {
                 context.status(200);
                 for(Expense e : expenses) display.append(e.toString()).append("\n");
-                context.result(String.valueOf(display));
             }
+            context.result(String.valueOf(display));
         };
     }
 
-    static Handler readExpenseStatus() {
-        return context -> {
-            String status = context.pathParam("status").toUpperCase(Locale.ROOT);
-            List<Expense> expenses = expenseDAO.readAllExpenses();
-            StringBuilder display = new StringBuilder();
-            expenses.stream().filter(e -> status.equals(e.getStatus().toString()))
-                    .forEach(e -> display.append(e).append("\n"));
-            if(expenses.isEmpty()) {
-                context.status(404);
-                context.result("No expenses found.");
-            } else {
-                context.status(200);
-                context.result(String.valueOf(display));
-            }
-        };
+    static StringBuilder readExpenseStatus(Status status, List<Expense> expenses) {
+        StringBuilder display = new StringBuilder();
+        expenses.stream().filter(e -> e.getStatus().equals(status))
+                .forEach(e -> display.append(e).append("\n"));
+        return display;
     }
 
     static Handler readExpense() {
@@ -89,12 +85,13 @@ public class ExpenseAPI {
             int id = Integer.parseInt(context.pathParam("id"));
             String body = context.body();
             Expense expense = gson.fromJson(body, Expense.class);
+            expense.setId(id);
             expense = expenseService.updateExpense(expense);
             if(expense == null) {
                 context.status(404);
             } else {
                 context.status(200);
-                context.result("Updated: " + expense.getId());
+                context.result("Updated expense: " + expense.getId());
             }
         };
     }
@@ -111,6 +108,7 @@ public class ExpenseAPI {
                 return;
             } else if(!expense.getStatus().toString().equals("PENDING")) {
                 context.result("Expense already approved or denied.");
+                context.status(400);
                 return;
             }
 
@@ -120,10 +118,12 @@ public class ExpenseAPI {
                     expense.setStatus(Status.APPROVED);
                     expenseService.updateExpense(expense);
                     context.status(200);
+                    context.result("Expense: " + expense.getId() + " approved.");
                 case DENIED:
                     expense.setStatus(Status.DENIED);
                     expenseService.updateExpense(expense);
                     context.status(200);
+                    context.result("Expense: " + expense.getId() + " denied.");
                 default: context.result("Invalid status.");
             }
         };

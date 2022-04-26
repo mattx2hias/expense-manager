@@ -19,7 +19,7 @@ public class ExpenseServiceImpl implements ExpenseService{
     @Override
     public Expense createExpense(Expense expense) throws EmployeeNotFoundException {
         expense.setId(GenerateID.generateRandomID());
-        if(expense.getStatus() == null) expense.setStatus(Status.PENDING);
+        expense.setStatus(Status.PENDING);
         if(employeeDAO.readAllEmployees().stream().noneMatch(e -> e.getId() == expense.getIssuerId()))
             throw new EmployeeNotFoundException();
         else return expenseDAO.createExpense(expense);
@@ -36,10 +36,11 @@ public class ExpenseServiceImpl implements ExpenseService{
     }
 
     @Override
-    public Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException {
-        if(expense.getStatus().equals(Status.APPROVED))
+    public Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException, ExpenseNotFoundException {
+        Expense expenseToUpdate = expenseDAO.readExpense(expense.getId());
+        if(expenseToUpdate.getStatus().equals(Status.APPROVED))
             throw new ExpenseAlreadyApprovedOrDeniedException("Expense already approved.");
-        if(expense.getStatus().equals(Status.DENIED))
+        if(expenseToUpdate.getStatus().equals(Status.DENIED))
             throw new ExpenseAlreadyApprovedOrDeniedException("Expense already denied.");
         return expenseDAO.updateExpense(expense);
     }

@@ -14,8 +14,7 @@ public class App {
         app.delete("employees/{id}", EmployeeAPI.deleteEmployee());
 
         app.post("/expenses", ExpenseAPI.createExpense());
-        app.get("/expenses", ExpenseAPI.readAllExpenses());
-        app.get("/expenses?status={status}", ExpenseAPI.readExpenseStatus());
+        app.get("/expenses", ExpenseAPI.readExpenses());
         app.get("/expenses/{id}", ExpenseAPI.readExpense());
         app.put("/expenses/{id}", ExpenseAPI.updateExpense());
         app.patch("/expenses/{id}/{status}", ExpenseAPI.approveOrDenyExpense());

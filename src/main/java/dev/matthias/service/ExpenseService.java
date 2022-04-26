@@ -3,6 +3,7 @@ package dev.matthias.service;
 import dev.matthias.entities.Expense;
 import dev.matthias.exceptions.EmployeeNotFoundException;
 import dev.matthias.exceptions.ExpenseAlreadyApprovedOrDeniedException;
+import dev.matthias.exceptions.ExpenseNotFoundException;
 
 public interface ExpenseService {
 
@@ -10,7 +11,7 @@ public interface ExpenseService {
 
     Expense readExpense(int id);
 
-    Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException;
+    Expense updateExpense(Expense expense) throws ExpenseAlreadyApprovedOrDeniedException, ExpenseNotFoundException;
 
     boolean deleteExpense(int id);
 }

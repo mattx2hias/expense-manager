@@ -16,13 +16,6 @@ public class Expense {
     private double cost;
     private int issuerId;
 
-    public Expense(int id, String name, double cost, int issuerId) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.issuerId = issuerId;
-    }
-
     public Expense(String name, double cost, int id) {
         this.name = name;
         this.cost = cost;

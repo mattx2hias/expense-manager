@@ -1,6 +1,7 @@
 package dev.matthias.servicetests;
 
 import dev.matthias.entities.Expense;
+import dev.matthias.exceptions.ExpenseNotFoundException;
 import dev.matthias.service.ExpenseService;
 import dev.matthias.service.ExpenseServiceImpl;
 import dev.matthias.exceptions.EmployeeNotFoundException;
@@ -45,7 +46,7 @@ class ExpenseServiceTests {
     @Test
     @Order(3)
     @DisplayName("Should update expense")
-    void shouldUpdateExpense() throws ExpenseAlreadyApprovedOrDeniedException {
+    void shouldUpdateExpense() throws ExpenseAlreadyApprovedOrDeniedException, ExpenseNotFoundException {
         testExpense.setName("Box Of Bananas");
         Expense updatedExpense = expenseService.updateExpense(testExpense);
         Assertions.assertEquals("Box Of Bananas", updatedExpense.getName());
