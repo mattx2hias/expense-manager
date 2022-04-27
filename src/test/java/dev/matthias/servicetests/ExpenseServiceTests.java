@@ -53,23 +53,17 @@ class ExpenseServiceTests {
     }
     
     @Test
-    @DisplayName("Should not update approved expense")
-    void shouldNotUpdateApprovedExpense() {
-        testExpense.setStatus(Status.APPROVED);
-        Assertions.assertThrows(ExpenseAlreadyApprovedOrDeniedException.class,
-                () -> expenseService.updateExpense(testExpense));
-    }
-
-    @Test
-    @DisplayName("Should not update denied expense")
-    void shouldNotUpdateDeniedExpense() {
-        testExpense.setStatus(Status.DENIED);
-        Assertions.assertThrows(ExpenseAlreadyApprovedOrDeniedException.class,
-                () -> expenseService.updateExpense(testExpense));
-    }
-
-    @Test
     @Order(4)
+    @DisplayName("Should not update approved expense")
+    void shouldNotUpdateApprovedExpense() throws ExpenseNotFoundException, ExpenseAlreadyApprovedOrDeniedException {
+        testExpense.setStatus(Status.APPROVED);
+        Expense expense = expenseService.updateExpense(testExpense);
+        Assertions.assertThrows(ExpenseAlreadyApprovedOrDeniedException.class,
+                () -> expenseService.updateExpense(expense));
+    }
+
+    @Test
+    @Order(5)
     @DisplayName("Should delete expense")
     void shouldDeleteExpense() {
         Assertions.assertTrue(expenseService.deleteExpense(testExpense.getId()));

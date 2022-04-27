@@ -8,6 +8,8 @@ import dev.matthias.entities.Expense;
 import dev.matthias.service.ExpenseService;
 import dev.matthias.service.ExpenseServiceImpl;
 import dev.matthias.exceptions.EmployeeNotFoundException;
+import dev.matthias.utilities.LogLevel;
+import dev.matthias.utilities.Logger;
 import dev.matthias.utilities.ParseStatus;
 import dev.matthias.utilities.Status;
 import io.javalin.http.Handler;
@@ -106,25 +108,29 @@ public class ExpenseAPI {
                 context.status(404);
                 context.result("Expense not found.");
                 return;
-            } else if(!expense.getStatus().toString().equals("PENDING")) {
+            } else if(!expense.getStatus().equals(Status.PENDING)) {
                 context.result("Expense already approved or denied.");
                 context.status(400);
                 return;
             }
 
             switch(s) {
-                case PENDING: context.result("Expense already pending.");
+                case PENDING: context.result("Expense already pending."); break;
                 case APPROVED:
                     expense.setStatus(Status.APPROVED);
                     expenseService.updateExpense(expense);
                     context.status(200);
+                    Logger.log("Approved Expense: " + expense.getId(), LogLevel.INFO);
                     context.result("Expense: " + expense.getId() + " approved.");
+                    break;
                 case DENIED:
                     expense.setStatus(Status.DENIED);
                     expenseService.updateExpense(expense);
                     context.status(200);
+                    Logger.log("Denied Expense: " + expense.getId(), LogLevel.INFO);
                     context.result("Expense: " + expense.getId() + " denied.");
-                default: context.result("Invalid status.");
+                    break;
+                default: context.result("Invalid status."); break;
             }
         };
     }
