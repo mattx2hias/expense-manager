@@ -19,5 +19,8 @@ public class App {
         app.put("/expenses/{id}", ExpenseAPI.updateExpense());
         app.patch("/expenses/{id}/{status}", ExpenseAPI.approveOrDenyExpense());
         app.delete("/expenses/{id}", ExpenseAPI.deleteExpense());
+
+        app.get("/employees/{id}/expenses", EmployeeExpenseAPI.readEmployeeExpenses());
+        app.post("/employees/{id}/expenses", EmployeeExpenseAPI.createEmployeeExpense());
     }
 }
