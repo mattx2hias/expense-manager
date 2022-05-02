@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class GenerateIDTest {
+class GenerateIDTest {
 
     @Test
     @DisplayName("Should generate unique random 4 digit number")

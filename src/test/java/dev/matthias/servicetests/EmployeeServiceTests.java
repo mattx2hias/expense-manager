@@ -10,7 +10,17 @@ import org.junit.jupiter.api.*;
 class EmployeeServiceTests {
 
     static EmployeeService employeeService = new EmployeeServiceImpl();
-    static Employee testEmployee = new Employee(1000, "Bob", "Barker");
+    Employee testEmployee;
+
+    @BeforeEach
+    void setup() {
+       testEmployee = new Employee(1000, "Bob", "Barker");
+    }
+
+    @AfterEach
+    void teardown() {
+        testEmployee = null;
+    }
 
     @Test
     @Order(1)
@@ -18,15 +28,6 @@ class EmployeeServiceTests {
     void shouldCreateNewEmployee() {
         Employee savedEmployee = employeeService.createEmployee(testEmployee);
         Assertions.assertNotNull(savedEmployee);
-    }
-
-    @Test
-    @Order(2)
-    @DisplayName("Should create random ID if zero")
-    void shouldCreateRandomIdIfZero() {
-        testEmployee.setId(0);
-        Employee savedEmployee = employeeService.createEmployee(testEmployee);
-        Assertions.assertNotEquals(0, savedEmployee.getId());
     }
 
     @Test
@@ -41,6 +42,7 @@ class EmployeeServiceTests {
     @DisplayName("Should not get nonexistent employee")
     void shouldNotGetNonexistentEmployee() throws EmployeeNotFoundException {
         Assertions.assertNull(employeeService.readEmployee(999));
+        Assertions.assertNull(employeeService.readEmployee(10000));
     }
 
     @Test
@@ -57,14 +59,12 @@ class EmployeeServiceTests {
     void shouldNotUpdateNonexistentEmployee() {
         testEmployee.setId(999);
         Assertions.assertNull(employeeService.updateEmployee(testEmployee));
-        testEmployee.setId(1000);
     }
 
     @Test
     @Order(5)
     @DisplayName("Should delete employee")
     void shouldDeleteEmployee() {
-        Assertions.assertTrue(employeeService.deleteEmployee(1000));
         Assertions.assertTrue(employeeService.deleteEmployee(testEmployee.getId()));
     }
 
