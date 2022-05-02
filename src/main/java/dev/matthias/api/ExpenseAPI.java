@@ -3,7 +3,6 @@ package dev.matthias.api;
 import com.google.gson.Gson;
 import dev.matthias.data.ExpenseDAO;
 import dev.matthias.data.ExpenseDAOPostgres;
-import dev.matthias.entities.Employee;
 import dev.matthias.entities.Expense;
 import dev.matthias.service.ExpenseService;
 import dev.matthias.service.ExpenseServiceImpl;
